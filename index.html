@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archivio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <a class="brand" href="#" id="brand">Archivio</a>
+    <div class="top-icons">
+      <button class="icon-btn" id="themeBtn" aria-label="Tema chiaro/scuro">
+        <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn" id="infoBtn" aria-label="Come aggiungere una pagina">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-view="cards">Card</button><span class="comma">,</span>
+    <button data-view="index">Indice</button><span class="comma">,</span>
+    <button data-view="saved">Preferiti</button>
+  </nav>
+
+  <div class="toolbar">
+    <label class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+      <input id="q" type="search" placeholder="Cerca…" autocomplete="off">
+    </label>
+    <div class="tool-right">
+      <button class="filters-btn" id="filtersBtn" aria-expanded="false">Filtri <span class="count" id="filterCount"></span>
+        <svg viewBox="0 0 12 8"><path d="M1 1.5 6 6.5 11 1.5"/></svg>
+      </button>
+      <button class="icon-btn" id="sortBtn" aria-label="Ordina">
+        <svg viewBox="0 0 24 24"><path d="M7 4v16M3.5 16.5 7 20l3.5-3.5M13 6h8M13 10h6M13 14h4M13 18h2"/></svg>
+      </button>
+    </div>
+    <div class="pop" id="filtersPop" hidden></div>
+  </div>
+
+  <div class="status" id="status"></div>
+  <main id="main"></main>
+</div>
+
+<aside class="sheet" id="sheet" aria-hidden="true">
+  <button class="icon-btn sheet-close" id="sheetClose" aria-label="Chiudi">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <div class="sheet-body" id="sheetBody"></div>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

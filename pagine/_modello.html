@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Titolo — Archivio</title>
+<!-- Se sposti il file in una sottocartella (es. pagine/ricette/), usa ../pagina.css e ../../index.html -->
+<link rel="stylesheet" href="pagina.css">
+<script>try{const t=JSON.parse(localStorage.getItem("hub.theme"));if(t)document.documentElement.dataset.theme=t}catch{}</script>
+</head>
+<!-- --c = colore della categoria, lo stesso scritto in data.js -->
+<body style="--c:#5d44a8">
+<div class="page">
+  <a class="back" href="../index.html">← Archivio</a>
+  <header>
+    <span class="badge">Categoria</span>
+    <h1>Titolo della pagina</h1>
+    <p class="sub">Sottotitolo · dettagli</p>
+  </header>
+
+  <!-- Riga di dati rapidi: togli o aggiungi blocchi -->
+  <dl class="facts">
+    <div><dt>Campo</dt><dd>Valore</dd></div>
+    <div><dt>Campo</dt><dd>Valore</dd></div>
+  </dl>
+
+  <h2>Sezione</h2>
+  <p>Testo libero.</p>
+
+  <!-- Lista con quantità (ingredienti, materiali…) -->
+  <h2>Elenco</h2>
+  <ul class="ingredients">
+    <li><span>Voce</span><span>quantità</span></li>
+    <li><span>Voce</span><span>quantità</span></li>
+  </ul>
+
+  <!-- Passaggi numerati -->
+  <h2>Passaggi</h2>
+  <ol class="steps">
+    <li>Primo passaggio.</li>
+    <li>Secondo passaggio.</li>
+  </ol>
+
+  <h2>Note</h2>
+  <div class="note">Un riquadro per gli appunti importanti.</div>
+</div>
+</body>
+</html>
