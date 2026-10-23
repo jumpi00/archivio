@@ -39,8 +39,8 @@ svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width:
 .tabs button { position: relative; padding: 0 var(--tp); line-height: 1.35; }
 .tabs .comma { margin: 0 calc(var(--tp) - 2px) 0 1px; }
 .tabs button:not(.active) + .comma { margin-left: calc(1px - var(--tp)); }
-/* tratto di evidenziatore: angoli vivi, bordi appena storti */
-.tabs button.active { background: var(--ink); color: var(--bg); line-height: 1.15; clip-path: polygon(0 10%, 100% 0, 99% 92%, 1% 100%); }
+/* tratto di evidenziatore: angoli vivi */
+.tabs button.active { background: var(--ink); color: var(--bg); line-height: 1.15; }
 
 /* toolbar */
 .toolbar { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 46px; border-bottom: var(--rule) solid var(--ink); }
