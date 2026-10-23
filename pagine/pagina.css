@@ -1,4 +1,4 @@
-/* Stile condiviso delle pagine interne. Imposta --c nel <body> per il colore della categoria. */
+/* Stile condiviso delle pagine interne. */
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap");
 
 :root {
@@ -6,12 +6,9 @@
   --font: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #141414; --panel: #1b1b1b; --ink: #ececec; --ink2: #a3a3a3; --line: #3a3a3a; color-scheme: dark; }
-}
-:root[data-theme="dark"] { --bg: #141414; --panel: #1b1b1b; --ink: #ececec; --ink2: #a3a3a3; --line: #3a3a3a; color-scheme: dark; }
 
 * { box-sizing: border-box; }
+a { color: inherit; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.65 var(--font); -webkit-font-smoothing: antialiased; }
 .page { max-width: 760px; margin: 0 auto; padding: 32px 32px 96px; }
 
@@ -30,7 +27,7 @@ h1 { margin: 10px 0 4px; font-size: 32px; font-weight: 400; line-height: 1.2; co
 h2 { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); margin: 36px 0 10px; }
 p { margin: 0 0 14px; }
 
-ul.ingredients { list-style: none; padding: 0; margin: 0; border: 2px solid var(--c, var(--ink)); border-left-width: 6px; border-radius: 12px; background: var(--panel); }
+ul.ingredients { list-style: none; padding: 0; margin: 0; border: 2px solid var(--c, var(--ink)); border-radius: 12px; background: var(--panel); }
 ul.ingredients li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 16px; border-bottom: 1px solid var(--line); }
 ul.ingredients li:last-child { border-bottom: 0; }
 ul.ingredients span:last-child { color: var(--ink2); white-space: nowrap; }
@@ -44,3 +41,29 @@ ol.steps li::before { content: counter(s, decimal-leading-zero); color: var(--c,
 .tag { font-size: 12px; padding: 1px 7px; border-radius: 5px; border: 1px solid var(--c, var(--ink2)); color: var(--c, var(--ink)); }
 
 @media (max-width: 600px) { .page { padding: 16px 16px 72px; } h1 { font-size: 26px; } }
+
+/* Link in testa alla pagina (ricetta originale, video…) */
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.links a { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 2px solid var(--ink); border-radius: 999px; font-size: 13px; text-decoration: none; }
+.links a.primary { background: var(--ink); color: var(--bg); }
+.links a:hover { background: var(--ink); color: var(--bg); }
+
+/* Menu a tendina (es. scelta della teglia) */
+.field-label { display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); margin: 0 0 6px; }
+select.field {
+  width: 100%; margin: 0 0 12px; padding: 10px 40px 10px 12px; font: inherit; font-size: 14px; color: var(--ink);
+  background: var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23111' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 14px center / 12px 8px no-repeat;
+  border: 2px solid var(--ink); border-radius: 10px; appearance: none; cursor: pointer;
+}
+
+/* Ingredienti da spuntare: <ul class="ingredients check"> */
+ul.ingredients.check li { justify-content: flex-start; align-items: baseline; gap: 12px; cursor: pointer; }
+ul.ingredients.check input { flex: none; width: 16px; height: 16px; margin: 0; accent-color: var(--ink); transform: translateY(2px); cursor: pointer; }
+ul.ingredients.check .q { margin-left: auto; color: var(--ink2); white-space: nowrap; text-align: right; }
+ul.ingredients.check small { display: block; font-size: 12px; color: var(--ink2); font-style: italic; }
+ul.ingredients.check li.done { opacity: .4; text-decoration: line-through; }
+
+ol.steps b { display: block; font-weight: 500; }
+ol.steps li.key { background: #ebebeb; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
+.note p:last-child { margin: 0; }
+.source { margin-top: 36px; font-size: 12px; color: var(--ink2); }

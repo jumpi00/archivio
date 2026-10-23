@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burfi al cocco e pistacchio — Archivio</title>
+<link rel="stylesheet" href="../pagina.css">
+</head>
+<body>
+<div class="page">
+  <a class="back" href="../../index.html#voce=burfi-cocco-pistacchio">← Archivio</a>
+  <header>
+    <span class="badge">Ricetta</span>
+    <h1>Burfi al cocco con granella di pistacchio</h1>
+    <p class="sub">Nariyal barfi di Hebbar's Kitchen, tradotto e con pistacchi in superficie.</p>
+    <div class="links">
+      <a class="primary" href="https://hebbarskitchen.com/coconut-burfi-recipe-nariyal-barfi/" target="_blank" rel="noopener">Ricetta originale ↗</a>
+      <a href="https://www.youtube.com/watch?v=8xGKiz3cwa8" target="_blank" rel="noopener">▶ Video ricetta</a>
+      <a href="https://www.youtube.com/watch?v=lZP2ydT3hQw" target="_blank" rel="noopener">▶ Video 2</a>
+    </div>
+  </header>
+
+  <dl class="facts">
+    <div><dt>Preparazione</dt><dd>10 min</dd></div>
+    <div><dt>Cottura</dt><dd>30–35 min</dd></div>
+    <div><dt>Spessore</dt><dd>~1,5 cm</dd></div>
+    <div><dt>Pezzi</dt><dd id="pz">25</dd></div>
+  </dl>
+
+  <h2>Ingredienti</h2>
+  <label class="field-label" for="pan">Pirofila in vetro IKEA</label>
+  <select class="field" id="pan">
+    <option value="1.25" data-pz="25">MIXTUR 27×18 cm · circa 25 pezzi</option>
+    <option value="1.4" data-pz="28">FÖLJSAM 24,5×24,5 cm · circa 28 pezzi</option>
+    <option value="2" data-pz="40">MIXTUR 35×25 cm · circa 40 pezzi</option>
+  </select>
+  <ul class="ingredients check" id="ing"></ul>
+
+  <h2>Procedimento</h2>
+  <ol class="steps">
+    <li><span><b>Ammolla il cocco</b>Mescola il cocco rapè con il latte tiepido e lascia riposare 10 minuti. Se usi cocco fresco, frullalo grossolanamente e salta l'ammollo.</span></li>
+    <li><span><b>Prepara la pirofila</b>Ungila e foderala con carta forno, lasciandola sbordare sui lati: servirà per sollevare il blocco.</span></li>
+    <li><span><b>Sciogli lo zucchero</b>In una padella larga antiaderente (o wok) metti cocco, zucchero e latte. Mescola a fuoco medio finché lo zucchero è sciolto.</span></li>
+    <li><span><b>Fai addensare</b>Continua a mescolare senza sosta per circa 10 minuti, finché il composto inizia ad addensarsi.</span></li>
+    <li><span><b>Aggiungi la panna</b>Unisci la panna e cuoci ancora circa 15 minuti, mescolando e raschiando il fondo, finché il composto si stacca dalle pareti.</span></li>
+    <li><span><b>Prova del piattino</b>Cuoci finché tiene la forma: un pizzico su un piattino deve rassodare in un paio di minuti. Meno cottura = più morbido, più cottura = più sodo.</span></li>
+    <li><span><b>Profuma</b>Spegni, aggiungi il cardamomo e mescola.</span></li>
+    <li><span><b>Stendi</b>Versa subito nella pirofila e livella a circa 1,5 cm, premendo con una spatola.</span></li>
+    <li class="key"><span><b>Granella di pistacchio</b>Ancora caldo, cospargi la granella su tutta la superficie, copri con carta forno e premi con il palmo o il fondo di un bicchiere perché aderisca.</span></li>
+    <li><span><b>Incidi da tiepido</b>Dopo 10–15 minuti, quando è rappreso ma ancora tiepido, taglia a quadrotti o rombi con un coltello unto. Da freddo si spezza.</span></li>
+    <li><span><b>Sforma e conserva</b>Da freddo, solleva il blocco con la carta forno e separa i pezzi. In frigo, in un contenitore ermetico, dura circa una settimana.</span></li>
+  </ol>
+
+  <h2>Note</h2>
+  <div class="note">
+    <p>Il vetro trattiene il calore: il burfi può metterci qualche minuto in più a rapprendere.</p>
+    <p>Con le dosi più grandi la cottura in padella si allunga, regolati con la prova del piattino e usa la padella più larga che hai.</p>
+    <p>Per un burfi meno dolce puoi togliere fino a un quinto dello zucchero, ma legherà un po' meno.</p>
+  </div>
+
+  <h2>Tag</h2>
+  <div class="tags"><span class="tag">Dolce</span><span class="tag">Indiana</span><span class="tag">Cocco</span><span class="tag">Pistacchio</span><span class="tag">Senza forno</span></div>
+
+  <p class="source">Ricetta originale: <a href="https://hebbarskitchen.com/coconut-burfi-recipe-nariyal-barfi/" target="_blank" rel="noopener">Hebbar's Kitchen</a></p>
+</div>
+
+<script>
+  // Dosi base = ricetta originale (x1), poi moltiplicate per la pirofila scelta
+  const base = [
+    { n: "cocco rapè", q: 200, u: "g", fresh: true },
+    { n: "latte tiepido per l'ammollo", q: 60, u: "ml" },
+    { n: "zucchero semolato", q: 400, u: "g" },
+    { n: "latte intero", q: 120, u: "ml" },
+    { n: "panna fresca (facoltativa)", q: 30, u: "ml" },
+    { n: "cardamomo in polvere", q: 0.25, u: "cucchiaino" },
+    { n: "granella di pistacchio", q: 32, u: "g" },
+    { n: "burro o olio per ungere", q: null, u: "q.b." }
+  ];
+  const sel = document.getElementById("pan");
+  const ul = document.getElementById("ing");
+  const done = new Set();
+
+  function fmt(v, u) {
+    if (u === "cucchiaino") return v <= 0.3 ? "¼ cucchiaino" : v <= 0.4 ? "⅓ cucchiaino" : "½ cucchiaino";
+    return Math.round(v / 5) * 5 + " " + u;
+  }
+
+  function render() {
+    const f = parseFloat(sel.value);
+    document.getElementById("pz").textContent = sel.selectedOptions[0].dataset.pz;
+    ul.innerHTML = "";
+    base.forEach((i, n) => {
+      const li = document.createElement("li");
+      const q = i.q === null ? i.u : fmt(i.q * f, i.u);
+      const extra = i.fresh ? `<small>oppure ${Math.round(250 * f / 10) * 10} g di cocco fresco</small>` : "";
+      li.innerHTML = `<input type="checkbox" id="i${n}"><label for="i${n}">${i.n}${extra}</label><span class="q">${q}</span>`;
+      const box = li.querySelector("input");
+      box.checked = done.has(n);
+      li.classList.toggle("done", box.checked);
+      box.addEventListener("change", () => {
+        box.checked ? done.add(n) : done.delete(n);
+        li.classList.toggle("done", box.checked);
+      });
+      ul.appendChild(li);
+    });
+  }
+
+  sel.addEventListener("change", () => { render(); try { localStorage.setItem("burfi-pan", sel.value); } catch (e) {} });
+  try { const s = localStorage.getItem("burfi-pan"); if (s) sel.value = s; } catch (e) {}
+  render();
+</script>
+</body>
+</html>

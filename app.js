@@ -1,5 +1,6 @@
 (() => {
-  const { title, categories, items } = window.HUB;
+  const { title, items } = window.HUB;
+  const categories = [...new Set(items.map(i => i.category))].sort((a, b) => a.localeCompare(b, "it"));
   const byId = Object.fromEntries(items.map(i => [i.id, i]));
   const $ = s => document.querySelector(s);
 
@@ -8,18 +9,22 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
 
+  // ordine temporale: a parità di data vince la voce scritta più in basso in data.js
+  const order = Object.fromEntries(items.map((i, n) => [i.id, n]));
+  const byDate = (a, b) => (a.date || "").localeCompare(b.date || "") || order[a.id] - order[b.id];
   const SORTS = [
-    { key: "az", label: "A → Z", fn: (a, b) => a.title.localeCompare(b.title, "it") },
-    { key: "za", label: "Z → A", fn: (a, b) => b.title.localeCompare(a.title, "it") },
-    { key: "new", label: "Più recenti", fn: (a, b) => (b.date || "").localeCompare(a.date || "") }
+    { key: "new", label: "Più recenti", fn: (a, b) => byDate(b, a) },
+    { key: "old", label: "Meno recenti", fn: byDate }
   ];
+  const ALPHA = (a, b) => a.title.localeCompare(b.title, "it");
+  const currentSort = () => SORTS.find(s => s.key === state.sort) || SORTS[0];
 
   const state = {
     view: store.get("hub.view", "cards"),
     q: "",
     cats: new Set(),
     tags: new Set(),
-    sort: store.get("hub.sort", "az"),
+    sort: store.get("hub.order", "new"),
     saved: new Set(store.get("hub.saved", []))
   };
 
@@ -31,7 +36,7 @@
   };
 
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const color = i => categories[i.category] || "#555";
+  const color = () => "var(--ink)"; // per ora niente colori per categoria
   const norm = s => String(s ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
   const isExternal = url => /^https?:\/\//.test(url);
 
@@ -41,7 +46,7 @@
   // ---------- filtering ----------
   function visible() {
     const q = norm(state.q.trim());
-    const sort = SORTS.find(s => s.key === state.sort) || SORTS[0];
+    const sort = currentSort();
     return items.filter(i => {
       if (state.view === "saved" && !state.saved.has(i.id)) return false;
       if (state.cats.size && !state.cats.has(i.category)) return false;
@@ -76,7 +81,7 @@
 
   function indexView(list) {
     const groups = {};
-    [...list].sort(SORTS[0].fn).forEach(i => {
+    [...list].sort(ALPHA).forEach(i => {
       const l = norm(i.title)[0]?.toUpperCase() || "#";
       (groups[l] ||= []).push(i);
     });
@@ -94,7 +99,7 @@
     const list = visible();
     const n = state.cats.size + state.tags.size;
     $("#filterCount").textContent = n || "";
-    const sort = SORTS.find(s => s.key === state.sort);
+    const sort = currentSort();
     $("#status").textContent = `${list.length} ${list.length === 1 ? "voce" : "voci"} · ${state.view === "index" ? "A → Z" : sort.label}`;
 
     let html;
@@ -115,8 +120,8 @@
     const allTags = [...new Set(items.flatMap(i => i.tags || []))].sort((a, b) => a.localeCompare(b, "it"));
     $("#filtersPop").innerHTML = `
       <h4>Categoria</h4>
-      <div class="chips">${Object.entries(categories).map(([c, col]) =>
-        `<button class="chip" style="--c:${col}" data-cat="${esc(c)}" aria-pressed="${state.cats.has(c)}">${esc(c)}</button>`).join("")}</div>
+      <div class="chips">${categories.map(c =>
+        `<button class="chip" data-cat="${esc(c)}" aria-pressed="${state.cats.has(c)}">${esc(c)}</button>`).join("")}</div>
       <h4>Tag</h4>
       <div class="chips">${allTags.map(t =>
         `<button class="chip" data-tag="${esc(t)}" aria-pressed="${state.tags.has(t)}">${esc(t)}</button>`).join("")}</div>
@@ -172,14 +177,14 @@
   title: "Risotto ai funghi",
   category: "Ricetta",
   subtitle: "Primo · 35 min",
-  date: "2026-10-23",
+  date: "2026-10-30",
   url: "pagine/ricette/risotto.html",
   description: "Testo del pannello.",
   tags: ["Riso", "Autunno"],
-  related: ["carbonara"]
+  related: ["burfi-cocco-pistacchio"]
 }</pre>
         <ol start="3">
-          <li>Per una nuova categoria aggiungila in <code>categories</code> con il suo colore.</li>
+          <li>Le card si ordinano per <code>date</code>: le più recenti in alto. Le categorie compaiono da sole nei filtri.</li>
           <li>I preferiti restano salvati solo in questo browser.</li>
         </ol>
       </div>`);
@@ -232,9 +237,9 @@
 
   $("#filtersBtn").addEventListener("click", () => togglePop());
   $("#sortBtn").addEventListener("click", () => {
-    const idx = SORTS.findIndex(s => s.key === state.sort);
+    const idx = SORTS.indexOf(currentSort());
     state.sort = SORTS[(idx + 1) % SORTS.length].key;
-    store.set("hub.sort", state.sort);
+    store.set("hub.order", state.sort);
     render();
   });
   $("#q").addEventListener("input", e => { state.q = e.target.value; render(); });
@@ -252,18 +257,6 @@
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") { togglePop(false); closeSheet(); }
     if (e.key === "/" && document.activeElement.tagName !== "INPUT") { e.preventDefault(); $("#q").focus(); }
-  });
-
-  // theme
-  const savedTheme = store.get("hub.theme", null);
-  if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-  $("#themeBtn").addEventListener("click", () => {
-    const dark = document.documentElement.dataset.theme
-      ? document.documentElement.dataset.theme === "dark"
-      : matchMedia("(prefers-color-scheme: dark)").matches;
-    const next = dark ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    store.set("hub.theme", next);
   });
 
   window.addEventListener("hashchange", route);
