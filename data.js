@@ -32,7 +32,7 @@ window.HUB = {
       date: "2026-10-23",
       url: "pagine/ricette/burfi-cocco-pistacchio.html",
       description: "Nariyal barfi di Hebbar's Kitchen, tradotto, meno dolce e con granella di pistacchio in superficie. Dosi calcolate sulla pirofila IKEA che scegli.",
-      tags: ["Dolce", "Indiana", "Cocco", "Pistacchio", "Senza forno"],
+      tags: ["Dolce", "India", "Cocco", "Pistacchio", "Senza forno"],
       related: []
     }
   ]
