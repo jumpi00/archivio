@@ -4,6 +4,7 @@
   Per aggiungere una pagina:
   1. crea il file dentro /pagine (copia pagine/_modello.html)
   2. aggiungi un oggetto in fondo a HUB.items
+  3. in index.html alza il numero ?v= di data.js (es. ?v=3 → ?v=4), così il browser non usa la versione vecchia
 
   Le card si ordinano per data: le più recenti in alto.
   A parità di data, la voce scritta più in basso qui sotto va prima.
