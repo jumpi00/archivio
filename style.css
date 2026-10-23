@@ -161,7 +161,10 @@ body.sheet-open .scrim { opacity: 1; pointer-events: auto; }
 
 @media (max-width: 700px) {
   :root { --gutter: 16px; }
-  .brand, .tabs { font-size: 19px; }
+  .brand { font-size: 19px; }
+  .tabs { font-size: clamp(15px, 5vw, 19px); flex-wrap: nowrap; white-space: nowrap; }
+  .tabs button { padding: 0 8px; }
+  .tabs .comma { margin-left: -8px; }
   .search input, .filters-btn { font-size: 16px; }
   .grid { grid-template-columns: 1fr; }
   .tool-right { gap: 8px; }
