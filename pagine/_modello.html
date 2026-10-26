@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Titolo — Archivio</title>
-<!-- Se sposti il file in una sottocartella (es. pagine/ricette/), usa ../pagina.css e ../../index.html -->
-<link rel="stylesheet" href="pagina.css?v=3">
+<!-- Se sposti il file in una sottocartella (es. pagine/ricette/), usa ../pagina.css, ../commenti.js e ../../index.html -->
+<link rel="stylesheet" href="pagina.css?v=4">
 </head>
 <body>
 <div class="page">
@@ -41,6 +41,10 @@
 
   <h2>Note</h2>
   <div class="note">Un riquadro per gli appunti importanti.</div>
+
+  <!-- Commenti: data-page = lo stesso id della voce in data.js -->
+  <section id="commenti" data-page="id-della-voce"></section>
 </div>
+<script src="commenti.js?v=1"></script>
 </body>
 </html>

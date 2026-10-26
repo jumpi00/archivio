@@ -67,3 +67,33 @@ ol.steps b { display: block; font-weight: 500; }
 ol.steps li.key { background: #ebebeb; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
 .note p:last-child { margin: 0; }
 .source { margin-top: 36px; font-size: 12px; color: var(--ink2); }
+
+/* Commenti (pagine/commenti.js) */
+.c-count { letter-spacing: 0; text-transform: none; }
+ul.comments { list-style: none; padding: 0; margin: 0 0 14px; }
+ul.comments li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+ul.comments li:first-child { border-top: 1px solid var(--line); }
+.c-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; color: var(--ink2); }
+.c-del { font: inherit; font-size: 18px; line-height: 1; color: var(--ink2); background: none; border: 0; padding: 2px 6px; cursor: pointer; }
+.c-del:hover { color: var(--ink); }
+.c-text { margin: 4px 0 0; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.c-empty { font-size: 13px; color: var(--ink2); }
+.c-form { display: grid; gap: 8px; }
+.c-form input, .c-form textarea, .c-pin input {
+  width: 100%; font: inherit; font-size: 14px; color: var(--ink); background: var(--panel);
+  border: 1.5px solid var(--ink); border-radius: 10px; padding: 10px 12px; outline: 0;
+}
+.c-form textarea { resize: vertical; min-height: 84px; }
+.c-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.c-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.c-status { font-size: 12px; color: var(--ink2); margin-right: auto; }
+.c-status.err { color: #9b2c2c; }
+.c-send, .c-pin button {
+  font: inherit; font-size: 13px; height: 36px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg);
+}
+.c-send:disabled { opacity: .4; cursor: default; }
+.c-pin { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.c-pin input { width: 120px; padding: 7px 10px; }
+.c-pin .c-cancel { background: none; color: var(--ink); }
+.c-pin-msg { font-size: 12px; color: #9b2c2c; }
