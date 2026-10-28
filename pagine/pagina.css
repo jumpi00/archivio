@@ -64,6 +64,7 @@ ul.ingredients.check small { display: block; font-size: 12px; color: var(--ink2)
 ul.ingredients.check li.done { opacity: .4; text-decoration: line-through; }
 
 ol.steps b { display: block; font-weight: 500; }
+ol.steps .qty { font-weight: 500; white-space: nowrap; }
 ol.steps li.key { background: #ebebeb; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
 .note p:last-child { margin: 0; }
 .source { margin-top: 36px; font-size: 12px; color: var(--ink2); }

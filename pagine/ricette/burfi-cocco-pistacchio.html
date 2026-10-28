@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Burfi al cocco e pistacchio — Archivio</title>
-<link rel="stylesheet" href="../pagina.css?v=4">
+<link rel="stylesheet" href="../pagina.css?v=9">
 </head>
 <body>
 <div class="page">
@@ -38,15 +38,15 @@
 
   <h2>Procedimento</h2>
   <ol class="steps">
-    <li><span><b>Ammolla il cocco</b>Mescola il cocco rapè con il latte tiepido e lascia riposare 10 minuti. Se usi cocco fresco, frullalo grossolanamente e salta l'ammollo.</span></li>
+    <li><span><b>Ammolla il cocco</b>Mescola <span class="qty" data-i="0">200 g</span> di cocco rapè con <span class="qty" data-i="1">60 ml</span> di latte tiepido e lascia riposare 10 minuti. Se usi cocco fresco (<span class="qty" data-i="fresh">250 g</span>), frullalo grossolanamente e salta l'ammollo.</span></li>
     <li><span><b>Prepara la pirofila</b>Ungila e foderala con carta forno, lasciandola sbordare sui lati: servirà per sollevare il blocco.</span></li>
-    <li><span><b>Sciogli lo zucchero</b>In una padella larga antiaderente (o wok) metti cocco, zucchero e latte. Mescola a fuoco medio finché lo zucchero è sciolto.</span></li>
+    <li><span><b>Sciogli lo zucchero</b>In una padella larga antiaderente (o wok) metti il cocco ammollato, <span class="qty" data-i="2">300 g</span> di zucchero e <span class="qty" data-i="3">120 ml</span> di latte. Mescola a fuoco medio finché lo zucchero è sciolto.</span></li>
     <li><span><b>Fai addensare</b>Continua a mescolare senza sosta per circa 10 minuti, finché il composto inizia ad addensarsi.</span></li>
-    <li><span><b>Aggiungi la panna</b>Unisci la panna e cuoci ancora circa 15 minuti, mescolando e raschiando il fondo, finché il composto si stacca dalle pareti.</span></li>
+    <li><span><b>Aggiungi la panna</b>Unisci <span class="qty" data-i="4">30 ml</span> di panna e cuoci ancora circa 15 minuti, mescolando e raschiando il fondo, finché il composto si stacca dalle pareti.</span></li>
     <li><span><b>Prova del piattino</b>Cuoci finché tiene la forma: un pizzico su un piattino deve rassodare in un paio di minuti. Meno cottura = più morbido, più cottura = più sodo.</span></li>
-    <li><span><b>Profuma</b>Spegni, aggiungi il cardamomo e mescola.</span></li>
+    <li><span><b>Profuma</b>Spegni, aggiungi <span class="qty" data-i="5">¼ cucchiaino</span> di cardamomo e mescola.</span></li>
     <li><span><b>Stendi</b>Versa subito nella pirofila e livella a circa 1,5 cm, premendo con una spatola.</span></li>
-    <li class="key"><span><b>Granella di pistacchio</b>Ancora caldo, cospargi la granella su tutta la superficie, copri con carta forno e premi con il palmo o il fondo di un bicchiere perché aderisca.</span></li>
+    <li class="key"><span><b>Granella di pistacchio</b>Ancora caldo, cospargi <span class="qty" data-i="6">32 g</span> di granella su tutta la superficie, copri con carta forno e premi con il palmo o il fondo di un bicchiere perché aderisca.</span></li>
     <li><span><b>Incidi da tiepido</b>Dopo 10–15 minuti, quando è rappreso ma ancora tiepido, taglia a quadrotti o rombi con un coltello unto. Da freddo si spezza.</span></li>
     <li><span><b>Sforma e conserva</b>Da freddo, solleva il blocco con la carta forno e separa i pezzi. In frigo, in un contenitore ermetico, dura circa una settimana.</span></li>
   </ol>
@@ -104,6 +104,11 @@
         li.classList.toggle("done", box.checked);
       });
       ul.appendChild(li);
+    });
+    // stesse dosi anche dentro i passaggi
+    document.querySelectorAll(".steps .qty[data-i]").forEach(s => {
+      const i = s.dataset.i;
+      s.textContent = i === "fresh" ? Math.round(250 * f / 10) * 10 + " g" : fmt(base[i].q * f, base[i].u);
     });
   }
 
