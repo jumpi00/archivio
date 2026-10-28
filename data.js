@@ -36,6 +36,17 @@ window.HUB = {
       related: []
     },
     {
+      id: "lemon-rolls-cambrea",
+      title: "Lemon rolls · Cambrea Bakes",
+      category: "Ricetta",
+      subtitle: "Girelle al limone · 2 h 30",
+      date: "2026-10-28",
+      url: "pagine/ricette/lemon-rolls-cambrea.html",
+      description: "Impasto col tangzhong, morbidissimo, ripieno di burro, zucchero di canna e lemon curd, frosting al formaggio cremoso. Più ricca e lunga di quella di Chelsweets.",
+      tags: ["Dolce", "Lievitati", "Limone", "Forno", "Weekend"],
+      related: ["lemon-rolls-chelsweets", "blueberry-cinnamon-rolls"]
+    },
+    {
       id: "lemon-rolls-chelsweets",
       title: "Lemon rolls · Chelsweets",
       category: "Ricetta",
@@ -44,7 +55,18 @@ window.HUB = {
       url: "pagine/ricette/lemon-rolls-chelsweets.html",
       description: "Girelle soffici con semi di papavero, ripieno di zucchero e scorza di limone e glassa al succo. Lievitazione veloce nel forno spento.",
       tags: ["Dolce", "Lievitati", "Limone", "Forno", "Colazione"],
-      related: []
+      related: ["lemon-rolls-cambrea", "blueberry-cinnamon-rolls"]
+    },
+    {
+      id: "blueberry-cinnamon-rolls",
+      title: "Blueberry cinnamon rolls",
+      category: "Ricetta",
+      subtitle: "Girelle ai mirtilli e cannella · 2 h 20",
+      date: "2026-10-28",
+      url: "pagine/ricette/blueberry-cinnamon-rolls.html",
+      description: "Girelle alla cannella con salsa di mirtilli fatta in casa e glassa al limone. In fondo alla pagina: come sostituire la cannella.",
+      tags: ["Dolce", "Lievitati", "Mirtilli", "Cannella", "Forno", "Colazione"],
+      related: ["lemon-rolls-chelsweets", "lemon-rolls-cambrea"]
     }
   ]
 };
