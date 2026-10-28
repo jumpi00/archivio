@@ -97,3 +97,12 @@ ul.comments li:first-child { border-top: 1px solid var(--line); }
 .c-pin input { width: 120px; padding: 7px 10px; }
 .c-pin .c-cancel { background: none; color: var(--ink); }
 .c-pin-msg { font-size: 12px; color: #9b2c2c; }
+
+/* Foto in testa alla pagina, con credito alla fonte */
+figure.hero { margin: 18px 0 0; }
+figure.hero img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #ebebeb; border: 1.5px solid var(--ink); border-radius: 12px; }
+figure.hero figcaption { margin-top: 6px; font-size: 12px; color: var(--ink2); }
+
+/* Sottogruppi di ingredienti (Impasto, Ripieno, Glassa…) */
+.group { margin: 18px 0 6px; font-size: 12px; font-weight: 500; }
+h2 + .group { margin-top: 0; }

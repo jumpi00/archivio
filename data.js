@@ -34,6 +34,17 @@ window.HUB = {
       description: "Nariyal barfi di Hebbar's Kitchen, tradotto, meno dolce e con granella di pistacchio in superficie. Dosi calcolate sulla pirofila IKEA che scegli.",
       tags: ["Dolce", "India", "Cocco", "Pistacchio", "Senza forno"],
       related: []
+    },
+    {
+      id: "lemon-rolls-chelsweets",
+      title: "Lemon rolls · Chelsweets",
+      category: "Ricetta",
+      subtitle: "Girelle al limone · 1 h 30",
+      date: "2026-10-28",
+      url: "pagine/ricette/lemon-rolls-chelsweets.html",
+      description: "Girelle soffici con semi di papavero, ripieno di zucchero e scorza di limone e glassa al succo. Lievitazione veloce nel forno spento.",
+      tags: ["Dolce", "Lievitati", "Limone", "Forno", "Colazione"],
+      related: []
     }
   ]
 };
