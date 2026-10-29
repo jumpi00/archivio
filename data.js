@@ -67,6 +67,17 @@ window.HUB = {
       description: "Girelle alla cannella con salsa di mirtilli fatta in casa e glassa al limone. In fondo alla pagina: come sostituire la cannella.",
       tags: ["Dolce", "Lievitati", "Mirtilli", "Cannella", "Forno", "Colazione"],
       related: ["lemon-rolls-chelsweets", "lemon-rolls-cambrea"]
+    },
+    {
+      id: "zuppa-fagioli-ditaloni",
+      title: "Zuppa di fagioli con ditaloni",
+      category: "Ricetta",
+      subtitle: "Primo · 1 h",
+      date: "2026-10-29",
+      url: "pagine/ricette/zuppa-fagioli-ditaloni.html",
+      description: "La pasta e fagioli di casa: borlotti (o borlotti e cannellini), patata, brodo e un po' di pomodoro, frullata col minipimer. Scegli le porzioni e le dosi si ricalcolano.",
+      tags: ["Primo", "Zuppa", "Legumi", "Pasta", "Inverno"],
+      related: []
     }
   ]
 };

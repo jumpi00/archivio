@@ -123,3 +123,10 @@ figure.hero.broken figcaption::before { content: "Foto non disponibile qui · ";
 ul.ingredients.check label { cursor: pointer; }
 .spesa-reset { display: block; margin: 10px 0 0 auto; font: inherit; font-size: 12px; color: var(--ink2); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .spesa-reset[hidden] { display: none; }
+
+/* pagine/porzioni.js */
+.porzioni { margin: 0 0 12px; }
+.stepper { display: inline-flex; align-items: center; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--panel); overflow: hidden; }
+.stepper button { width: 44px; height: 40px; font: inherit; font-size: 18px; color: var(--ink); background: none; border: 0; cursor: pointer; }
+.stepper button:disabled { color: var(--line); cursor: default; }
+.stepper output { min-width: 44px; padding: 0 4px; text-align: center; font-size: 15px; font-weight: 500; border-left: 1px solid var(--line); border-right: 1px solid var(--line); line-height: 40px; }
