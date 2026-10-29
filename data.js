@@ -78,6 +78,61 @@ window.HUB = {
       description: "La pasta e fagioli di casa: borlotti (o borlotti e cannellini), patata, brodo e un po' di pomodoro, frullata col minipimer. Scegli le porzioni e le dosi si ricalcolano.",
       tags: ["Primo", "Zuppa", "Legumi", "Pasta", "Inverno"],
       related: []
+    },
+    {
+      id: "curry-merluzzo-cocco",
+      title: "Merluzzo al curry e cocco",
+      category: "Ricetta",
+      subtitle: "Pesce · 35 min",
+      date: "2026-10-29",
+      url: "pagine/ricette/curry-merluzzo-cocco.html",
+      description: "Filetti di merluzzo in sugo di curry rosso e latte di cocco, con peperone e taccole. Porzioni regolabili e note per il pesce surgelato.",
+      tags: ["Pesce", "Merluzzo", "Curry", "Cocco", "Veloce"],
+      related: ["merluzzo-thai-cocco", "curry-pesce-cocco-lime", "merluzzo-brodo-cocco-lime"]
+    },
+    {
+      id: "merluzzo-thai-cocco",
+      title: "Merluzzo thai al cocco",
+      category: "Ricetta",
+      subtitle: "Pesce · 30 min",
+      date: "2026-10-29",
+      url: "pagine/ricette/merluzzo-thai-cocco.html",
+      description: "Merluzzo in padella con latte di cocco, curry rosso thai e lime, da servire con riso o noodles. Porzioni regolabili e note per il pesce surgelato.",
+      tags: ["Pesce", "Merluzzo", "Thai", "Cocco", "Veloce"],
+      related: ["curry-merluzzo-cocco", "curry-pesce-cocco-lime", "merluzzo-brodo-cocco-lime"]
+    },
+    {
+      id: "curry-pesce-cocco-lime",
+      title: "Curry di pesce al cocco e lime",
+      category: "Ricetta",
+      subtitle: "Pesce e riso jasmine · 30 min",
+      date: "2026-10-29",
+      url: "pagine/ricette/curry-pesce-cocco-lime.html",
+      description: "Pesce bianco in un curry leggero al cocco e lime, servito sul riso jasmine. Porzioni regolabili e note per il pesce surgelato.",
+      tags: ["Pesce", "Curry", "Cocco", "Lime", "Riso"],
+      related: ["curry-merluzzo-cocco", "merluzzo-thai-cocco", "merluzzo-brodo-cocco-lime"]
+    },
+    {
+      id: "merluzzo-brodo-cocco-lime",
+      title: "Merluzzo in brodo di cocco e lime",
+      category: "Ricetta",
+      subtitle: "Pesce · 30 min",
+      date: "2026-10-29",
+      url: "pagine/ricette/merluzzo-brodo-cocco-lime.html",
+      description: "Merluzzo cotto in un brodo di cocco, lime e citronella con pak choi, zenzero fritto e peperoncino al lime. Porzioni regolabili e note per il pesce surgelato.",
+      tags: ["Pesce", "Merluzzo", "Cocco", "Lime", "Senza glutine"],
+      related: ["curry-merluzzo-cocco", "merluzzo-thai-cocco", "curry-pesce-cocco-lime"]
+    },
+    {
+      id: "branzino-salsa-limone",
+      title: "Branzino con salsa cremosa al limone",
+      category: "Ricetta",
+      subtitle: "Pesce · 25 min",
+      date: "2026-10-29",
+      url: "pagine/ricette/branzino-salsa-limone.html",
+      description: "Filetti di branzino con la pelle croccante e salsa di burro, panna e limone (da Mary Berry Recipes). Porzioni regolabili e note per il pesce surgelato.",
+      tags: ["Pesce", "Branzino", "Limone", "Veloce", "Secondo"],
+      related: []
     }
   ]
 };
