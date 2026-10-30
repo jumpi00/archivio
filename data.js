@@ -133,6 +133,28 @@ window.HUB = {
       description: "Filetti di branzino con la pelle croccante e salsa di burro, panna e limone (da Mary Berry Recipes). Porzioni regolabili e note per il pesce surgelato.",
       tags: ["Pesce", "Branzino", "Limone", "Veloce", "Secondo"],
       related: []
+    },
+    {
+      id: "pizza-teglia-simo",
+      title: "Pizza in teglia di Simo",
+      category: "Ricetta",
+      subtitle: "Pizza · lievitazione corta o lunga",
+      date: "2026-10-30",
+      url: "pagine/ricette/pizza-teglia-simo.html",
+      description: "La ricetta del cugino Simo per una teglia di casa: farina 0 e semola, idratazione 70%, acqua e ghiaccio. Due pulsanti per la lievitazione corta (2–4 ore) o lunga in frigo (24–48 ore), dosi per numero di teglie.",
+      tags: ["Pizza", "Lievitati", "Forno", "Di famiglia"],
+      related: ["pizza-teglia-romana"]
+    },
+    {
+      id: "pizza-teglia-romana",
+      title: "Pizza romana in teglia",
+      category: "Ricetta",
+      subtitle: "Pizza · @the_romano_baker",
+      date: "2026-10-30",
+      url: "pagine/ricette/pizza-teglia-romana.html",
+      description: "L'impasto del reel di @the_romano_baker: idratazione 67%, miele e pirlatura sulla semola. Due pulsanti per la lievitazione corta o lunga in frigo, dosi per numero di teglie.",
+      tags: ["Pizza", "Lievitati", "Forno", "Romana"],
+      related: ["pizza-teglia-simo"]
     }
   ]
 };
