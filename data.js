@@ -136,12 +136,12 @@ window.HUB = {
     },
     {
       id: "pizza-teglia-simo",
-      title: "Pizza in teglia di Simo",
+      title: "Pizza in teglia di Massimo (Simo)",
       category: "Ricetta",
       subtitle: "Pizza · lievitazione corta o lunga",
       date: "2026-10-30",
       url: "pagine/ricette/pizza-teglia-simo.html",
-      description: "La ricetta del cugino Simo per una teglia di casa: farina 0 e semola, idratazione 70%, acqua e ghiaccio. Due pulsanti per la lievitazione corta (2–4 ore) o lunga in frigo (24–48 ore), dosi per numero di teglie.",
+      description: "La ricetta del cugino Massimo (Simo) per una teglia di casa: farina 0 e semola, idratazione 70%, acqua e ghiaccio. Due pulsanti per la lievitazione corta (2–4 ore) o lunga in frigo (24–48 ore), dosi per numero di teglie.",
       tags: ["Pizza", "Lievitati", "Forno", "Di famiglia"],
       related: ["pizza-teglia-romana"]
     },
