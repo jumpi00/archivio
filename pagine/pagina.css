@@ -140,3 +140,8 @@ header + .field-label { margin-top: 24px; }
 .versioni button.active { background: var(--ink); color: var(--bg); }
 .versioni button.active small { color: var(--bg); }
 [data-ver][hidden] { display: none !important; }
+
+/* pagine/condividi.js: il link all'Archivio solo per te */
+html:not(.owner) .back { display: none; }
+.links button { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1.5px solid var(--ink); border-radius: 999px; font: inherit; font-size: 13px; color: var(--ink); background: none; cursor: pointer; }
+.links button:hover { background: var(--ink); color: var(--bg); }
