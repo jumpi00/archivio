@@ -143,5 +143,6 @@ header + .field-label { margin-top: 24px; }
 
 /* pagine/condividi.js: il link all'Archivio solo per te */
 html:not(.owner) .back { display: none; }
-.links button { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1.5px solid var(--ink); border-radius: 999px; font: inherit; font-size: 13px; color: var(--ink); background: none; cursor: pointer; }
-.links button:hover { background: var(--ink); color: var(--bg); }
+.links .share { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 4px; border: 0; font: inherit; font-size: 13px; color: var(--ink); background: none; cursor: pointer; }
+.links .share svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.links .share:hover span { text-decoration: underline; text-underline-offset: 3px; }

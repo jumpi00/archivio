@@ -21,7 +21,9 @@
     if (!links) { links = document.createElement("div"); links.className = "links"; header.append(links); }
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.textContent = "Condividi";
+    btn.className = "share";
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Condividi</span>';
+    const label = btn.querySelector("span");
     links.append(btn);
 
     const url = location.origin + location.pathname;
@@ -33,11 +35,11 @@
       }
       try {
         await navigator.clipboard.writeText(url);
-        btn.textContent = "Link copiato";
+        label.textContent = "Link copiato";
       } catch {
         prompt("Copia il link:", url);
       }
-      setTimeout(() => btn.textContent = "Condividi", 2000);
+      setTimeout(() => label.textContent = "Condividi", 2000);
     });
   });
 })();
