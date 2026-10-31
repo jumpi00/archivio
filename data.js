@@ -166,6 +166,17 @@ window.HUB = {
       description: "Pane bianco morbido fatto di panetti ovali uniti in fila, col solco chiaro al centro, come quello della Migros. Scegli quanti filoni fare e le dosi si ricalcolano.",
       tags: ["Pane", "Lievitati", "Forno", "Svizzera"],
       related: ["pizza-teglia-simo", "pizza-teglia-romana"]
+    },
+    {
+      id: "pizza-teglia-claude",
+      title: "Pizza in teglia Claude",
+      category: "Ricetta",
+      subtitle: "Pizza · 24 ore in frigo",
+      date: "2026-10-31",
+      url: "pagine/ricette/pizza-teglia-claude.html",
+      description: "Impasto al 75% di idratazione con 24 ore di lievitazione quasi tutte in frigo: pizza alta, soffice dentro e croccante sotto. Scegli quante teglie fare e le dosi si ricalcolano.",
+      tags: ["Pizza", "Lievitati", "Forno"],
+      related: ["pizza-teglia-simo", "pizza-teglia-romana"]
     }
   ]
 };
