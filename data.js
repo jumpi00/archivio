@@ -163,7 +163,7 @@ window.HUB = {
       subtitle: "Pane · ~2 h 30",
       date: "2026-10-31",
       url: "pagine/ricette/pane-ticinese.html",
-      description: "Pane bianco morbido fatto di panetti ovali uniti in fila, col solco chiaro al centro, come quello della Migros. Scegli quanti panetti fare e le dosi si ricalcolano.",
+      description: "Pane bianco morbido fatto di panetti ovali uniti in fila, col solco chiaro al centro, come quello della Migros. Scegli quanti filoni fare e le dosi si ricalcolano.",
       tags: ["Pane", "Lievitati", "Forno", "Svizzera"],
       related: ["pizza-teglia-simo", "pizza-teglia-romana"]
     }
