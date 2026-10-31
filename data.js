@@ -155,6 +155,17 @@ window.HUB = {
       description: "L'impasto del reel di @the_romano_baker: idratazione 67%, miele e pirlatura sulla semola. Due pulsanti per la lievitazione corta o lunga in frigo, dosi per numero di teglie.",
       tags: ["Pizza", "Lievitati", "Forno", "Romana"],
       related: ["pizza-teglia-simo"]
+    },
+    {
+      id: "pane-ticinese",
+      title: "Pane ticinese (tipo Migros)",
+      category: "Ricetta",
+      subtitle: "Pane · ~2 h 30",
+      date: "2026-10-31",
+      url: "pagine/ricette/pane-ticinese.html",
+      description: "Pane bianco morbido fatto di panetti ovali uniti in fila, col solco chiaro al centro, come quello della Migros. Scegli quanti panetti fare e le dosi si ricalcolano.",
+      tags: ["Pane", "Lievitati", "Forno", "Svizzera"],
+      related: ["pizza-teglia-simo", "pizza-teglia-romana"]
     }
   ]
 };
