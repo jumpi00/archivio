@@ -177,6 +177,17 @@ window.HUB = {
       description: "Impasto al 75% di idratazione con 24 ore di lievitazione quasi tutte in frigo: pizza alta, soffice dentro e croccante sotto. Scegli quante teglie fare e le dosi si ricalcolano.",
       tags: ["Pizza", "Lievitati", "Forno"],
       related: ["pizza-teglia-simo", "pizza-teglia-romana"]
+    },
+    {
+      id: "torta-limone-papavero-ottolenghi",
+      title: "Torta al limone e semi di papavero",
+      category: "Ricetta",
+      subtitle: "Ottolenghi & Helen Goh · plumcake",
+      date: "2026-11-02",
+      url: "pagine/ricette/torta-limone-papavero-ottolenghi.html",
+      description: "Il plumcake al limone e papavero dal libro «Sweet» di Ottolenghi e Helen Goh, con glassa al limone stesa a caldo. Scegli quanti plumcake fare e le dosi si ricalcolano; in fondo, le alternative alla panna acida.",
+      tags: ["Dolce", "Limone", "Forno", "Colazione"],
+      related: ["lemon-rolls-chelsweets", "lemon-rolls-cambrea"]
     }
   ]
 };
