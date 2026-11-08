@@ -170,3 +170,7 @@ body.sheet-open .scrim { opacity: 1; pointer-events: auto; }
 .archive-form textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); resize: vertical; }
 .archive-actions { display: flex; align-items: center; justify-content: flex-end; gap: 16px; margin-top: 10px; }
 .archive-actions .pill-btn { width: auto; margin: 0; }
+.archive-form input[type=password] { width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+.archive-form textarea + label { margin-top: 10px; }
+.archive-msg { margin: 8px 0 0; font-size: 13px; font-weight: 500; color: var(--ink); }
+.archive-msg:empty { display: none; }

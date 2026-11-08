@@ -26,9 +26,49 @@
     tags: new Set(),
     sort: store.get("hub.order", "new"),
     saved: new Set(store.get("hub.saved", [])),
-    archived: store.get("hub.archived", {}),  // id → { note, date }
-    archiving: null                            // id della voce con il modulo "Archivia" aperto
+    archived: { ...store.get("hub.archivedCache", {}), ...store.get("hub.archived", {}) },  // id → { note, date }
+    archiving: null,  // id della voce con il modulo "Archivia" aperto
+    restoring: null   // id della voce che chiede il PIN per il ripristino
   };
+
+  // ---------- schede archiviate, condivise tra i dispositivi (Supabase, stesso PIN dei commenti) ----------
+  const SUPABASE_URL = "https://uwkwhuxhsqtyeqejqapv.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_Iu5sGXn2BwxZWjse-sJ8Yw_ZoovbbQh";
+  async function api(path, body) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      method: body ? "POST" : "GET",
+      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, "Content-Type": "application/json" },
+      body: body && JSON.stringify(body)
+    });
+    const text = await r.text();
+    const data = text ? JSON.parse(text) : null;
+    if (r.status === 404) throw new Error("Manca la tabella su Supabase: lancia sql/002-archiviate.sql");
+    if (!r.ok) throw new Error((data && data.message) || `Errore ${r.status}`);
+    return data;
+  }
+  const pinStore = {
+    get() { try { return sessionStorage.getItem("hub.commentPin"); } catch { return null; } },
+    set(v) { try { v ? sessionStorage.setItem("hub.commentPin", v) : sessionStorage.removeItem("hub.commentPin"); } catch {} }
+  };
+  // archiviate solo in questo browser prima della sincronizzazione: si caricano al primo PIN giusto
+  const legacy = () => store.get("hub.archived", {});
+
+  async function loadArchived() {
+    const rows = await api("archivio_archived?select=item_id,note,archived_at");
+    const server = Object.fromEntries(rows.map(r => [r.item_id, { note: r.note, date: r.archived_at.slice(0, 10) }]));
+    store.set("hub.archivedCache", server);
+    state.archived = { ...server, ...legacy() };
+  }
+
+  async function withPin(pin, fn) {
+    const ok = await fn(pin);
+    if (!ok) { pinStore.set(null); throw new Error("PIN sbagliato"); }
+    pinStore.set(pin);
+    const old = legacy();
+    for (const [id, a] of Object.entries(old)) await api("rpc/archivio_archive", { p_id: id, p_note: a.note, p_pin: pin, p_date: a.date });
+    if (Object.keys(old).length) { try { localStorage.removeItem("hub.archived"); } catch {} }
+    await loadArchived();
+  }
   const isArchived = id => Object.hasOwn(state.archived, id);
   const fmtDate = d => new Date(d).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" });
 
@@ -166,6 +206,7 @@
   function showItem(id) {
     const i = byId[id];
     if (state.archiving && state.archiving !== id) state.archiving = null;
+    if (state.restoring && state.restoring !== id) state.restoring = null;
     if (!i) return closeSheet();
     document.title = `${i.title} — ${title}`;
     const meta = [i.category, i.subtitle, i.date && new Date(i.date).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" })].filter(Boolean).join(" · ");
@@ -186,12 +227,24 @@
     `);
   }
 
+  const pinField = () => pinStore.get() ? "" : `<label for="archivePin">PIN</label>
+      <input id="archivePin" type="password" inputmode="numeric" autocomplete="off" required>`;
+
   function archiveBlock(i) {
-    if (isArchived(i.id)) return `<div class="archived-box">${archivedNote(i.id)}
-      <button class="pill-btn" data-restore="${esc(i.id)}">${ICON.restore}Ripristina</button></div>`;
+    if (isArchived(i.id)) {
+      if (state.restoring === i.id) return `<div class="archived-box">${archivedNote(i.id)}
+        <form class="archive-form" data-restore-form="${esc(i.id)}">${pinField()}
+          <p class="archive-msg" id="archiveMsg"></p>
+          <div class="archive-actions"><button type="button" class="link-btn" data-archive-cancel>Annulla</button><button type="submit" class="pill-btn primary">${ICON.restore}Ripristina</button></div>
+        </form></div>`;
+      return `<div class="archived-box">${archivedNote(i.id)}
+        <button class="pill-btn" data-restore="${esc(i.id)}">${ICON.restore}Ripristina</button></div>`;
+    }
     if (state.archiving === i.id) return `<form class="archive-form" data-archive-form="${esc(i.id)}">
       <label for="archiveNote">Perché la archivi?</label>
       <textarea id="archiveNote" rows="3" maxlength="300" placeholder="Es. provata, non ci è piaciuta"></textarea>
+      ${pinField()}
+      <p class="archive-msg" id="archiveMsg"></p>
       <div class="archive-actions"><button type="button" class="link-btn" data-archive-cancel>Annulla</button><button type="submit" class="pill-btn primary">${ICON.archive}Archivia</button></div>
     </form>`;
     return `<button class="pill-btn" data-archive="${esc(i.id)}">${ICON.archive}Archivia</button>`;
@@ -219,7 +272,7 @@
 }</pre>
         <ol start="3">
           <li>Le card si ordinano per <code>date</code>: le più recenti in alto. Le categorie compaiono da sole nei filtri.</li>
-          <li>Preferiti e schede archiviate restano salvati solo in questo browser.</li>
+          <li>I preferiti restano salvati solo in questo browser. Le schede archiviate invece valgono su tutti i dispositivi: per archiviare o ripristinare serve il PIN dei commenti.</li>
         </ol>
       </div>`);
   }
@@ -247,11 +300,14 @@
       return;
     }
     if (t.dataset.archive) { state.archiving = t.dataset.archive; showItem(t.dataset.archive); $("#archiveNote").focus(); return; }
-    if ("archiveCancel" in t.dataset) { const id = state.archiving; state.archiving = null; showItem(id); return; }
+    if ("archiveCancel" in t.dataset) { const id = state.archiving || state.restoring; state.archiving = state.restoring = null; showItem(id); return; }
     if (t.dataset.restore) {
-      delete state.archived[t.dataset.restore];
-      store.set("hub.archived", state.archived);
-      render(); showItem(t.dataset.restore); return;
+      const id = t.dataset.restore;
+      state.restoring = id;
+      showItem(id);
+      if (pinStore.get()) $("[data-restore-form]").requestSubmit();
+      else $("#archivePin").focus();
+      return;
     }
     if (t.dataset.open) { location.hash = `voce=${encodeURIComponent(t.dataset.open)}`; return; }
     if (t.dataset.view) { state.view = t.dataset.view; store.set("hub.view", state.view); render(); return; }
@@ -276,15 +332,31 @@
     $("#filtersBtn").setAttribute("aria-expanded", open);
   }
 
-  document.addEventListener("submit", e => {
-    const f = e.target.closest("[data-archive-form]");
+  document.addEventListener("submit", async e => {
+    const f = e.target.closest("[data-archive-form], [data-restore-form]");
     if (!f) return;
     e.preventDefault();
-    const id = f.dataset.archiveForm;
-    state.archived[id] = { note: $("#archiveNote").value.trim(), date: new Date().toISOString().slice(0, 10) };
-    store.set("hub.archived", state.archived);
-    state.archiving = null;
-    render(); showItem(id);
+    const restore = "restoreForm" in f.dataset;
+    const id = restore ? f.dataset.restoreForm : f.dataset.archiveForm;
+    const note = restore ? "" : $("#archiveNote").value.trim();
+    const pin = pinStore.get() || $("#archivePin").value;
+    const btn = f.querySelector("[type=submit]");
+    btn.disabled = true;
+    try {
+      await withPin(pin, p => restore
+        ? api("rpc/archivio_unarchive", { p_id: id, p_pin: p }).then(ok => {
+            const old = legacy();  // se era archiviata solo qui, toglila prima che venga caricata
+            if (ok && old[id]) { delete old[id]; store.set("hub.archived", old); }
+            return ok;
+          })
+        : api("rpc/archivio_archive", { p_id: id, p_note: note, p_pin: p }));
+      state.archiving = state.restoring = null;
+      render(); showItem(id);
+    } catch (err) {
+      showItem(id);  // ridisegna il modulo (con il campo PIN se quello salvato era sbagliato)
+      if (!restore && $("#archiveNote")) $("#archiveNote").value = note;
+      $("#archiveMsg").textContent = err.message;
+    }
   });
 
   $("#filtersBtn").addEventListener("click", () => togglePop());
@@ -314,4 +386,5 @@
   window.addEventListener("hashchange", route);
   render();
   route();
+  loadArchived().then(() => { render(); route(); }).catch(() => {});
 })();
