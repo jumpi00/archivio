@@ -25,14 +25,20 @@
     cats: new Set(),
     tags: new Set(),
     sort: store.get("hub.order", "new"),
-    saved: new Set(store.get("hub.saved", []))
+    saved: new Set(store.get("hub.saved", [])),
+    archived: store.get("hub.archived", {}),  // id → { note, date }
+    archiving: null                            // id della voce con il modulo "Archivia" aperto
   };
+  const isArchived = id => Object.hasOwn(state.archived, id);
+  const fmtDate = d => new Date(d).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" });
 
   const ICON = {
     bookmark: '<svg viewBox="0 0 24 24"><path d="M6.5 3.5h11v17L12 16l-5.5 4.5z"/></svg>',
     link: '<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8 15.8 7.2M8.2 13.2l7.6 3.6"/></svg>',
     arrow: '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
-    open: '<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>'
+    open: '<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+    archive: '<svg viewBox="0 0 24 24"><path d="M3.5 4.5h17v4h-17zM5 8.5v11h14v-11M10 12.5h4"/></svg>',
+    restore: '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>'
   };
 
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -48,6 +54,7 @@
     const q = norm(state.q.trim());
     const sort = currentSort();
     return items.filter(i => {
+      if ((state.view === "archived") !== isArchived(i.id)) return false;
       if (state.view === "saved" && !state.saved.has(i.id)) return false;
       if (state.cats.size && !state.cats.has(i.category)) return false;
       if (state.tags.size && ![...state.tags].every(t => (i.tags || []).includes(t))) return false;
@@ -73,10 +80,16 @@
         ${saveBtn(i)}
       </div>
       ${i.subtitle ? `<p class="card-sub">${esc(i.subtitle)}</p>` : ""}
+      ${isArchived(i.id) ? archivedNote(i.id) : ""}
       ${rel ? `<p class="card-meta">${ICON.link}${rel} ${rel === 1 ? "collegamento" : "collegamenti"}</p>` : ""}
       ${!i.url ? `<span class="soon">— pagina da creare</span>` : ""}
       <div class="tags">${shown.map(t => `<span class="tag">${esc(t)}</span>`).join("")}${tags.length > shown.length ? `<span class="tag more">+${tags.length - shown.length}</span>` : ""}</div>
     </article>`;
+  }
+
+  function archivedNote(id) {
+    const a = state.archived[id];
+    return `<p class="archived-note"><span>Archiviata il ${esc(fmtDate(a.date))}</span>${a.note ? esc(a.note) : "<i>Nessun commento</i>"}</p>`;
   }
 
   function indexView(list) {
@@ -95,23 +108,31 @@
   }
 
   function render() {
+    if (state.view === "archived" && !Object.keys(state.archived).length) state.view = "cards";
     document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
     const list = visible();
     const n = state.cats.size + state.tags.size;
     $("#filterCount").textContent = n || "";
     const sort = currentSort();
-    $("#status").textContent = `${list.length} ${list.length === 1 ? "voce" : "voci"} · ${state.view === "index" ? "A → Z" : sort.label}`;
+    $("#status").textContent = state.view === "archived"
+      ? `${list.length} ${list.length === 1 ? "archiviata" : "archiviate"} · ${sort.label}`
+      : `${list.length} ${list.length === 1 ? "voce" : "voci"} · ${state.view === "index" ? "A → Z" : sort.label}`;
 
     let html;
     if (!list.length) {
       html = state.view === "saved" && !state.saved.size
         ? `<div class="empty"><strong>Nessun preferito</strong>Tocca il segnalibro su una card per salvarla qui.</div>`
+        : state.view === "archived" && !Object.keys(state.archived).length
+        ? `<div class="empty"><strong>Nessuna scheda archiviata</strong>Apri una scheda e tocca «Archivia» per toglierla dalla lista.</div>`
         : `<div class="empty"><strong>Niente da mostrare</strong>Prova a cambiare la ricerca o i filtri.</div>`;
     } else if (state.view === "index") {
       html = indexView(list);
     } else {
       html = `<div class="grid">${list.map(card).join("")}</div>`;
     }
+    const nArch = Object.keys(state.archived).filter(id => byId[id]).length;
+    if (state.view === "archived") html = `<button class="archive-link" data-view="cards">← Torna alle schede</button>` + html;
+    else if (nArch) html += `<button class="archive-link" data-view="archived">${ICON.archive}Archiviate (${nArch})</button>`;
     $("#main").innerHTML = html;
     if (!$("#filtersPop").hidden) renderFilters();
   }
@@ -144,6 +165,7 @@
 
   function showItem(id) {
     const i = byId[id];
+    if (state.archiving && state.archiving !== id) state.archiving = null;
     if (!i) return closeSheet();
     document.title = `${i.title} — ${title}`;
     const meta = [i.category, i.subtitle, i.date && new Date(i.date).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" })].filter(Boolean).join(" · ");
@@ -152,7 +174,8 @@
     openSheet(`
       <h2 style="color:${color(i)}">${esc(i.title)}</h2>
       <div class="meta">${esc(meta)}</div>
-      ${saveBtn(i, "pill-btn")}
+      ${isArchived(i.id) ? "" : saveBtn(i, "pill-btn")}
+      ${archiveBlock(i)}
       ${i.description ? `<p class="desc">${esc(i.description)}</p>` : ""}
       <a class="pill-btn primary" ${i.url ? `href="${esc(i.url)}"${ext ? ' target="_blank" rel="noopener"' : ""}` : 'aria-disabled="true"'}>
         ${ext ? ICON.open : ICON.arrow}${i.url ? (ext ? "Apri link" : "Apri pagina") : "Pagina non ancora creata"}
@@ -161,6 +184,17 @@
         <button class="rel" data-open="${esc(r.id)}">${ICON.arrow}<span>${esc(r.title)}<small>${esc([r.category, r.subtitle].filter(Boolean).join(" · "))}</small></span></button>`).join("")}` : ""}
       ${(i.tags || []).length ? `<h5>Tag</h5><div class="tags" style="--c:${color(i)}">${i.tags.map(t => `<button class="tag" data-filter-tag="${esc(t)}">${esc(t)}</button>`).join("")}</div>` : ""}
     `);
+  }
+
+  function archiveBlock(i) {
+    if (isArchived(i.id)) return `<div class="archived-box">${archivedNote(i.id)}
+      <button class="pill-btn" data-restore="${esc(i.id)}">${ICON.restore}Ripristina</button></div>`;
+    if (state.archiving === i.id) return `<form class="archive-form" data-archive-form="${esc(i.id)}">
+      <label for="archiveNote">Perché la archivi?</label>
+      <textarea id="archiveNote" rows="3" maxlength="300" placeholder="Es. provata, non ci è piaciuta"></textarea>
+      <div class="archive-actions"><button type="button" class="link-btn" data-archive-cancel>Annulla</button><button type="submit" class="pill-btn primary">${ICON.archive}Archivia</button></div>
+    </form>`;
+    return `<button class="pill-btn" data-archive="${esc(i.id)}">${ICON.archive}Archivia</button>`;
   }
 
   function showHelp() {
@@ -185,7 +219,7 @@
 }</pre>
         <ol start="3">
           <li>Le card si ordinano per <code>date</code>: le più recenti in alto. Le categorie compaiono da sole nei filtri.</li>
-          <li>I preferiti restano salvati solo in questo browser.</li>
+          <li>Preferiti e schede archiviate restano salvati solo in questo browser.</li>
         </ol>
       </div>`);
   }
@@ -212,6 +246,13 @@
       if (document.body.classList.contains("sheet-open") && location.hash === `#voce=${encodeURIComponent(id)}`) showItem(id);
       return;
     }
+    if (t.dataset.archive) { state.archiving = t.dataset.archive; showItem(t.dataset.archive); $("#archiveNote").focus(); return; }
+    if ("archiveCancel" in t.dataset) { const id = state.archiving; state.archiving = null; showItem(id); return; }
+    if (t.dataset.restore) {
+      delete state.archived[t.dataset.restore];
+      store.set("hub.archived", state.archived);
+      render(); showItem(t.dataset.restore); return;
+    }
     if (t.dataset.open) { location.hash = `voce=${encodeURIComponent(t.dataset.open)}`; return; }
     if (t.dataset.view) { state.view = t.dataset.view; store.set("hub.view", state.view); render(); return; }
     if (t.dataset.cat) { toggle(state.cats, t.dataset.cat); render(); return; }
@@ -234,6 +275,17 @@
     pop.hidden = !open;
     $("#filtersBtn").setAttribute("aria-expanded", open);
   }
+
+  document.addEventListener("submit", e => {
+    const f = e.target.closest("[data-archive-form]");
+    if (!f) return;
+    e.preventDefault();
+    const id = f.dataset.archiveForm;
+    state.archived[id] = { note: $("#archiveNote").value.trim(), date: new Date().toISOString().slice(0, 10) };
+    store.set("hub.archived", state.archived);
+    state.archiving = null;
+    render(); showItem(id);
+  });
 
   $("#filtersBtn").addEventListener("click", () => togglePop());
   $("#sortBtn").addEventListener("click", () => {

@@ -156,3 +156,17 @@ body.sheet-open .scrim { opacity: 1; pointer-events: auto; }
   .tool-right { gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Schede archiviate */
+.archive-link { display: flex; align-items: center; gap: 8px; margin: 22px auto 0; font-size: 13px; color: var(--ink2); text-decoration: underline; text-underline-offset: 3px; }
+.archive-link:first-child { margin: 0 0 14px; }
+.archive-link svg { width: 16px; height: 16px; }
+.archived-note { margin: 0; padding: 8px 10px; font-size: 13px; line-height: 1.5; background: #ebebeb; border-radius: 8px; }
+.archived-note span { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink2); margin-bottom: 2px; }
+.archived-note i { color: var(--ink2); }
+.archived-box { margin: 14px 0; }
+.archive-form { margin: 14px 0; padding: 12px; border: var(--rule) solid var(--ink); border-radius: 12px; background: var(--panel); }
+.archive-form label { display: block; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); margin-bottom: 6px; }
+.archive-form textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); resize: vertical; }
+.archive-actions { display: flex; align-items: center; justify-content: flex-end; gap: 16px; margin-top: 10px; }
+.archive-actions .pill-btn { width: auto; margin: 0; }
