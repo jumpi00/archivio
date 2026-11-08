@@ -77,7 +77,7 @@ window.HUB = {
       url: "pagine/ricette/zuppa-fagioli-ditaloni.html",
       description: "La pasta e fagioli di casa: borlotti (o borlotti e cannellini), patata, brodo e un po' di pomodoro, frullata col minipimer. Scegli le porzioni e le dosi si ricalcolano.",
       tags: ["Primo", "Zuppa", "Legumi", "Pasta", "Inverno"],
-      related: []
+      related: ["zuppa-pollo-cremosa"]
     },
     {
       id: "curry-merluzzo-cocco",
@@ -188,6 +188,17 @@ window.HUB = {
       description: "Il plumcake al limone e papavero dal libro «Sweet» di Ottolenghi e Helen Goh, con glassa al limone stesa a caldo. Scegli quanti plumcake fare e le dosi si ricalcolano; in fondo, le alternative alla panna acida.",
       tags: ["Dolce", "Limone", "Forno", "Colazione"],
       related: ["lemon-rolls-chelsweets", "lemon-rolls-cambrea"]
+    },
+    {
+      id: "zuppa-pollo-cremosa",
+      title: "Zuppa di pollo cremosa",
+      category: "Ricetta",
+      subtitle: "Cucina facile con Elena · 45 min",
+      date: "2026-11-08",
+      url: "pagine/ricette/zuppa-pollo-cremosa.html",
+      description: "Verdure e petto di pollo cotti insieme in pentola, verdure frullate col brodo e pollo sfilacciato. Scegli le porzioni e le dosi si ricalcolano.",
+      tags: ["Zuppa", "Pollo", "Inverno", "Facile"],
+      related: ["zuppa-fagioli-ditaloni"]
     }
   ]
 };
