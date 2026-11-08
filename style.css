@@ -174,3 +174,4 @@ body.sheet-open .scrim { opacity: 1; pointer-events: auto; }
 .archive-form textarea + label { margin-top: 10px; }
 .archive-msg { margin: 8px 0 0; font-size: 13px; font-weight: 500; color: var(--ink); }
 .archive-msg:empty { display: none; }
+.icon-btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); }

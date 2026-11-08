@@ -148,8 +148,8 @@
   }
 
   function render() {
-    if (state.view === "archived" && !Object.keys(state.archived).length) state.view = "cards";
     document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
+    $("#archivedBtn").setAttribute("aria-pressed", state.view === "archived");
     const list = visible();
     const n = state.cats.size + state.tags.size;
     $("#filterCount").textContent = n || "";
@@ -170,9 +170,7 @@
     } else {
       html = `<div class="grid">${list.map(card).join("")}</div>`;
     }
-    const nArch = Object.keys(state.archived).filter(id => byId[id]).length;
     if (state.view === "archived") html = `<button class="archive-link" data-view="cards">← Torna alle schede</button>` + html;
-    else if (nArch) html += `<button class="archive-link" data-view="archived">${ICON.archive}Archiviate (${nArch})</button>`;
     $("#main").innerHTML = html;
     if (!$("#filtersPop").hidden) renderFilters();
   }
