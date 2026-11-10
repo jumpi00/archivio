@@ -151,3 +151,23 @@ html:not(.owner) .back { display: none; }
 .archivia .note { margin-bottom: 10px; }
 .arch-cancel { font: inherit; font-size: 13px; color: var(--ink); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .arch-start { flex-wrap: wrap; }
+
+/* Stampa (pulsante in condividi.js): solo la ricetta, con porzioni e versione scelte */
+@media print {
+  @page { margin: 14mm; }
+  :root { --bg: #fff; --panel: #fff; }
+  body { font-size: 11pt; line-height: 1.5; }
+  .page { max-width: none; padding: 0; }
+  .back, .links, .spesa-reset, .stepper button, .versioni button:not(.active), #commenti, .archivia, .tags, h2:has(+ .tags), ul.ingredients.check input { display: none !important; }
+  figure.hero { break-inside: avoid; }
+  figure.hero img { max-height: 6cm; width: auto; max-width: 100%; }
+  .stepper, .versioni { border: 0; background: none; }
+  .stepper output { border: 0; line-height: 1.5; min-width: 0; padding: 0 0 0 6px; }
+  .versioni { display: block; margin-bottom: 12px; }
+  .versioni button.active { background: none; color: var(--ink); padding: 0; text-align: left; }
+  .versioni button.active small { color: var(--ink2); }
+  ul.ingredients.check li.done { opacity: 1; text-decoration: none; }
+  ul.ingredients li, ol.steps li, .note { break-inside: avoid; }
+  h2 { break-after: avoid; margin-top: 24px; }
+  a { text-decoration: none; }
+}

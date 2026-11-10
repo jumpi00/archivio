@@ -4,7 +4,9 @@
     o a chi ci arriva dall'Archivio. Chi riceve il link della ricetta vede solo la ricetta.
   - Aggiunge un pulsante "Condividi" accanto ai link in cima: sul telefono apre la condivisione
     (WhatsApp, Messaggi…), sul computer copia il link.
-  Per usarlo: <script src="../condividi.js?v=1"></script> dentro <head>, prima di pagina.css.
+  - Aggiunge un pulsante "Stampa": stampa la ricetta con le porzioni e la versione scelte
+    (lo stile di stampa è in fondo a pagina.css).
+  Per usarlo: <script src="../condividi.js?v=3"></script> dentro <head>, prima di pagina.css.
 */
 (() => {
   let owner = false;
@@ -24,7 +26,12 @@
     btn.className = "share";
     btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Condividi</span>';
     const label = btn.querySelector("span");
-    links.append(btn);
+    const print = document.createElement("button");
+    print.type = "button";
+    print.className = "share print";
+    print.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/></svg><span>Stampa</span>';
+    print.addEventListener("click", () => window.print());
+    links.append(btn, print);
 
     const url = location.origin + location.pathname;
     const title = document.title.replace(/ — Archivio$/, "");
